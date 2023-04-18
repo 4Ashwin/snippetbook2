@@ -1,0 +1,114 @@
+{
+  "name": "snippetbook",
+  "displayName": "Snippetbook",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.77.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:sidebar",
+    "onCommand:snippetbook.refresh"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "sidebar-view",
+          "title": "Snippets",
+          "icon": "media/icon-dark1.png"
+        }
+      ]
+    },
+    "views": {
+      "sidebar-view": [
+        {
+          "type": "webview",
+          "id": "sidebar",
+          "name": "Snippets",
+          "icon": "media/icon-dark1.png",
+          "contextualTitle": "Snippets"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "snippetbook.helloWorld",
+        "title": "Hello World"
+      },
+      {
+        "command": "snippetbook.store",
+        "title": "store"
+      },
+      {
+        "command": "snippetbook.retrieve",
+        "title": "retrieve"
+      },
+      {
+        "command": "snippetbook.refresh",
+        "title": "Refresh"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "snippetbook.store",
+          "group": "navigation",
+          "when": "editorHasSelection && editorTextFocus && !editorReadonly"
+        },
+        {
+          "command": "snippetbook.retrieve",
+          "group": "navigation",
+          "when": "editorHasSelection && editorTextFocus && !editorReadonly"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "concurrently \"rollup --config --bundleConfigAsCjs -w\" \"webpack --mode development --watch\"",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@rollup/plugin-typescript": "^11.1.0",
+    "@tsconfig/svelte": "^4.0.1",
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.77.0",
+    "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "@typescript-eslint/parser": "^5.56.0",
+    "@vscode/test-electron": "^2.3.0",
+    "concurrently": "^8.0.1",
+    "eslint": "^8.36.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.2.0",
+    "rollup": "^2.3.4",
+    "rollup-plugin-svelte": "^6.0.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "svelte": "^3.58.0",
+    "svelte-check": "^1.6.0",
+    "svelte-preprocess": "^4.10.7",
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.5",
+    "webpack": "^5.76.3",
+    "webpack-cli": "^5.0.1"
+  },
+  "dependencies": {
+    "@firebase/firestore": "^3.10.0",
+    "firebase": "^9.19.1",
+    "firebase-admin": "^11.5.0"
+  }
+}
